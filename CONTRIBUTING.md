@@ -79,34 +79,13 @@ xcopy TEMPLATE participant-yourname\ /E /I
 
 ---
 
-## Step 5 — Add Your Folder Name to the Registry
-
-The file `participants/registry.json` keeps a list of all participant folders.
-
-1. Open `participants/registry.json` in your text editor.
-2. Add your folder name to the list. Follow the same pattern as the existing entries:
-
-```json
-[
-  "participant-ravi",
-  "participant-sneha",
-  "participant-yourname"
-]
-```
-
-> Make sure there is a comma after each entry except the last one.
-
-3. Save the file.
-
----
-
-## Step 6 — Commit and Push Your Changes
+## Step 5 — Commit and Push Your Changes
 
 Now you will save your changes to Git and upload them to GitHub.
 
 ```bash
-# Stage your new folder and the updated registry
-git add participant-yourname/ participants/registry.json
+# Stage your new folder
+git add participant-yourname/
 
 # Create a commit with a clear message
 git commit -m "Add participant-yourname"
@@ -119,7 +98,7 @@ git push origin main
 
 ---
 
-## Step 7 — Create a Pull Request
+## Step 6 — Create a Pull Request
 
 A **pull request** (PR) asks the maintainers to add your changes to the main project.
 
@@ -132,7 +111,7 @@ A **pull request** (PR) asks the maintainers to add your changes to the main pro
 4. Give your PR a short title, e.g. `Add participant-priya`.
 5. Click **Create pull request**.
 
-That's it! A maintainer will review your PR and merge it. Once merged, your page will appear in the showcase.
+That's it! A maintainer will review your PR and merge it. Once merged, the registry is updated automatically and your page will appear in the showcase.
 
 ---
 
