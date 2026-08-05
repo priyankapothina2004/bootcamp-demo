@@ -3,7 +3,7 @@ name: Auto-merge Participant PRs
 on:
   pull_request_target:
     paths:
-      - 'participants/participant-*/**'
+      - 'participants/**'
     types: [opened, synchronize, reopened]
 
 jobs:
@@ -25,15 +25,15 @@ jobs:
             });
 
             const unsafe = files.filter(f =>
-              !f.filename.startsWith('participants/participant-')
+              !f.filename.startsWith('participants/')
             );
 
             if (unsafe.length > 0) {
-              console.log('PR touches files outside participants/ — skipping auto-merge:');
+              console.log('PR touches files outside participants/ folder — skipping auto-merge:');
               unsafe.forEach(f => console.log(' -', f.filename));
               core.setFailed('PR contains files outside allowed path.');
             } else {
-              console.log('All files are inside participants/participant-* — safe to merge.');
+              console.log('All files are inside participants/ — safe to merge.');
             }
 
       - name: Auto-merge the PR
