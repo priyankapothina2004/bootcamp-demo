@@ -10,6 +10,7 @@ Usage:
 import os
 import json
 import re
+from html import escape
 
 PARTICIPANTS_DIR = os.path.join(os.path.dirname(__file__), "participants")
 MAIN_HTML = os.path.join(os.path.dirname(__file__), "index.html")
@@ -24,16 +25,17 @@ def initials(name):
 
 
 def make_card(folder, info):
-    name = info.get("name", folder)
-    roll_no = info.get("roll_no", "")
-    photo = info.get("photo", "")
+    name = escape(info.get("name", folder))
+    roll_no = escape(str(info.get("roll_no", "")))
+    photo_raw = info.get("photo", "")
+    photo = escape(photo_raw) if photo_raw.startswith("https://") else ""
     href = f"participants/{folder}/index.html"
 
     if photo:
         avatar_html = (
             f'<div class="card-avatar">'
-            f'<img src="{photo}" alt="{name}" '
-            f'onerror="this.parentElement.textContent=\'{initials(name)}\'">'
+            f'<img src="{photo}" alt="{name}" loading="lazy" '
+            f'onerror="this.parentElement.textContent=&quot;{initials(name)}&quot;">'
             f'</div>'
         )
     else:

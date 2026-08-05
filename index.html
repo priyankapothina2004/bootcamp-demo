@@ -195,6 +195,9 @@
 
 <main>
   <p class="section-label">Participants</p>
+  <input id="search" type="search" placeholder="Search by name or roll number…"
+    style="width:100%;padding:0.65rem 1rem;margin-bottom:1.25rem;background:#1a1f2e;
+    border:1px solid #2d3748;border-radius:8px;color:#e2e8f0;font-size:0.95rem;outline:none;">
   <div id="grid">
 <!-- PARTICIPANTS_START -->
 <a class="card" href="participants/001-ravi/index.html">
@@ -216,5 +219,14 @@
 <footer>KIET Git &amp; GitHub Bootcamp &mdash; hosted on GitHub Pages</footer>
 
 
+<script>
+  document.getElementById('search').addEventListener('input', function () {
+    var q = this.value.toLowerCase();
+    document.querySelectorAll('#grid .card').forEach(function (card) {
+      var text = card.textContent.toLowerCase();
+      card.style.display = text.includes(q) ? '' : 'none';
+    });
+  });
+</script>
 </body>
 </html>
