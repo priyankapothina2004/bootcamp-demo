@@ -43,62 +43,117 @@ cd bootcamp-demo
 
 ---
 
-## Step 3 — Copy the TEMPLATE Folder and Rename It
+## Step 3 — Create Your Folder
 
-The `TEMPLATE` folder contains a ready-made `index.html` for you to fill in.
+Inside the `participants/` folder, create a new folder named using your **roll number and name**:
 
-1. Copy the entire `TEMPLATE` folder.
-2. Rename the copy to `participant-yourname` — replace `yourname` with your actual first name or GitHub username.
+```
+rollno-yourname
+```
+
+**Examples:** `21BCE001-ravi`, `21BCE002-sneha`, `21BCE003-priya`
 
 **On Mac / Linux:**
 
 ```bash
-cp -r TEMPLATE participant-yourname
+mkdir participants/21BCE001-yourname
 ```
 
 **On Windows (Command Prompt):**
 
 ```cmd
-xcopy TEMPLATE participant-yourname\ /E /I
+mkdir participants\21BCE001-yourname
 ```
 
-> Example: if your name is Priya, the folder should be called `participant-priya`.
+> Use your actual roll number and your first name (or GitHub username). Keep it lowercase with no spaces.
 
 ---
 
-## Step 4 — Edit Your index.html
+## Step 4 — Fill in info.json
 
-1. Open `participant-yourname/index.html` in your text editor.
-2. Replace all the placeholder text with your real information:
-   - `Your Name` → your name
-   - `Your project description` → what you built
-   - `your-github-username` → your GitHub username
-   - etc.
-3. Look for the `✏️` comments in the file — they mark every spot you need to update.
-4. Save the file when you are done.
+Copy the `info.json` from the `TEMPLATE/` folder into your new folder:
+
+**On Mac / Linux:**
+
+```bash
+cp TEMPLATE/info.json participants/21BCE001-yourname/info.json
+```
+
+**On Windows:**
+
+```cmd
+copy TEMPLATE\info.json participants\21BCE001-yourname\info.json
+```
+
+Open `info.json` in your text editor and fill in your details:
+
+```json
+{
+  "roll_no": "21BCE001",
+  "name": "Your Full Name",
+  "photo": "https://github.com/your-github-username.png"
+}
+```
+
+- `roll_no` — your college roll number
+- `name` — your full name as you want it shown on the main page
+- `photo` — your GitHub profile picture URL (replace `your-github-username` with your actual GitHub username)
+
+Save the file when you are done.
 
 ---
 
-## Step 5 — Commit and Push Your Changes
+## Step 5 — Write Your index.html
 
-Now you will save your changes to Git and upload them to GitHub.
+Copy the starter template into your folder:
+
+**On Mac / Linux:**
+
+```bash
+cp TEMPLATE/index.html participants/21BCE001-yourname/index.html
+```
+
+**On Windows:**
+
+```cmd
+copy TEMPLATE\index.html participants\21BCE001-yourname\index.html
+```
+
+Open `participants/21BCE001-yourname/index.html` in your text editor and replace all the placeholder text with your real information. Look for the `✏️` comments — they mark every spot you need to update:
+
+- Your role or track (Frontend, Data Science, etc.)
+- Your city and country
+- Your email and GitHub link
+- A short introduction about yourself
+- Your project title and description
+- Your skills
+- What you built or learned
+- A fun fact about yourself
+
+Save the file when you are done.
+
+---
+
+## Step 6 — Commit and Push Your Changes
+
+Now save your changes to Git and upload them to GitHub.
 
 ```bash
 # Stage your new folder
-git add participant-yourname/
+git add participants/21BCE001-yourname/
 
 # Create a commit with a clear message
-git commit -m "Add participant-yourname"
+git commit -m "Add 21BCE001-yourname"
 
 # Push to your fork on GitHub
 git push origin main
 ```
 
-> Replace `yourname` with the name you used for your folder.
+> Replace `21BCE001-yourname` with your actual folder name.
 
 ---
 
-## Step 6 — Create a Pull Request
+## Step 7 — Create a Pull Request
 
 A **pull request** (PR) asks the maintainers to add your changes to the main project.
 
@@ -108,10 +163,10 @@ A **pull request** (PR) asks the maintainers to add your changes to the main pro
 3. Make sure:
    - **base repository** is the original `bootcamp-demo` repo
    - **head repository** is your fork
-4. Give your PR a short title, e.g. `Add participant-priya`.
+4. Give your PR a short title, e.g. `Add 21BCE001-yourname`.
 5. Click **Create pull request**.
 
-That's it! A maintainer will review your PR and merge it. Once merged, the registry is updated automatically and your page will appear in the showcase.
+That's it! Once your PR is merged, `update.py` runs automatically and your profile card — with your photo, name, and roll number — will appear on the main showcase page.
 
 ---
 
