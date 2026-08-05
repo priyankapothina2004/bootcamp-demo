@@ -40,7 +40,7 @@ def make_card(folder, info):
         avatar_html = f'<div class="card-avatar">{initials(name)}</div>'
 
     return (
-        f'<a class="card" href="{href}">\n'
+        f'<a class="card" href="{href}" onclick="openModal(event,\'{href}\')">\n'
         f'  {avatar_html}\n'
         f'  <div class="card-name">{name}</div>\n'
         f'  <div class="card-roll">{roll_no}</div>\n'
