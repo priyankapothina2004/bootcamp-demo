@@ -183,72 +183,6 @@
       border-top: 1px solid #1a1f2e;
     }
 
-    /* ── Modal ── */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      backdrop-filter: blur(4px);
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal-box {
-      background: #0f1117;
-      border: 1px solid #2d3748;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 820px;
-      max-height: 85vh;
-      overflow-y: auto;
-      position: relative;
-      animation: modalIn 0.22s ease;
-    }
-
-    @keyframes modalIn {
-      from { opacity: 0; transform: translateY(20px) scale(0.97); }
-      to   { opacity: 1; transform: translateY(0)   scale(1); }
-    }
-
-    .modal-close {
-      position: sticky;
-      top: 1rem;
-      float: right;
-      margin: 1rem 1rem 0 0;
-      background: #1a1f2e;
-      border: 1px solid #2d3748;
-      color: #a0aec0;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.15s, color 0.15s;
-      z-index: 10;
-    }
-
-    .modal-close:hover {
-      background: #2d3748;
-      color: #e2e8f0;
-    }
-
-    #modal-content {
-      padding: 0 0 1.5rem;
-      clear: both;
-    }
-
-    /* Hide back-link inside modal */
-    #modal-content .back-link { display: none; }
   </style>
 </head>
 <body>
@@ -263,13 +197,13 @@
   <p class="section-label">Participants</p>
   <div id="grid">
 <!-- PARTICIPANTS_START -->
-<a class="card" href="participants/001-ravi/index.html" onclick="openModal(event,'participants/001-ravi/index.html')">
+<a class="card" href="participants/001-ravi/index.html">
   <div class="card-avatar"><img src="https://github.com/ravi.png" alt="Ravi" onerror="this.parentElement.textContent='R'"></div>
   <div class="card-name">Ravi</div>
   <div class="card-roll">001</div>
   <div class="card-arrow">View Profile &rarr;</div>
 </a>
-<a class="card" href="participants/002-sneha/index.html" onclick="openModal(event,'participants/002-sneha/index.html')">
+<a class="card" href="participants/002-sneha/index.html">
   <div class="card-avatar"><img src="https://github.com/sneha.png" alt="Sneha" onerror="this.parentElement.textContent='S'"></div>
   <div class="card-name">Sneha</div>
   <div class="card-roll">002</div>
@@ -281,76 +215,6 @@
 
 <footer>KIET Git &amp; GitHub Bootcamp &mdash; hosted on GitHub Pages</footer>
 
-<!-- ── Modal ── -->
-<div id="modal-overlay" class="modal-overlay" onclick="handleOverlayClick(event)">
-  <div class="modal-box" id="modal-box">
-    <button class="modal-close" onclick="closeModal()" title="Close">&times;</button>
-    <div id="modal-content"></div>
-  </div>
-</div>
-
-<script>
-  async function openModal(e, url) {
-    e.preventDefault();
-
-    const overlay = document.getElementById('modal-overlay');
-    const contentEl = document.getElementById('modal-content');
-
-    // Show overlay with loading state
-    contentEl.innerHTML = '<p style="padding:3rem;text-align:center;color:#4a5568;">Loading…</p>';
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-
-    try {
-      const resp = await fetch(url);
-      const html = await resp.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-
-      // Collect styles from the participant page
-      const styles = Array.from(doc.querySelectorAll('style'))
-        .map(s => s.textContent)
-        .join('\n');
-
-      // Remove the back-link since we're inside a modal
-      const backLink = doc.querySelector('.back-link');
-      if (backLink) backLink.remove();
-
-      // Extract main content area
-      const wrap = doc.querySelector('.page-wrap') || doc.body;
-      const bodyHTML = wrap.innerHTML;
-
-      contentEl.innerHTML = `<style>${styles}</style><div class="page-wrap">${bodyHTML}</div>`;
-
-      // Make any links inside open in a new tab
-      contentEl.querySelectorAll('a[href]').forEach(a => {
-        if (!a.getAttribute('href').startsWith('#')) {
-          a.setAttribute('target', '_blank');
-          a.setAttribute('rel', 'noopener noreferrer');
-        }
-      });
-    } catch (err) {
-      contentEl.innerHTML = '<p style="padding:3rem;text-align:center;color:#fc8181;">Failed to load profile.</p>';
-    }
-  }
-
-  function closeModal() {
-    document.getElementById('modal-overlay').classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function handleOverlayClick(e) {
-    // Close only when clicking the backdrop, not the modal box
-    if (!document.getElementById('modal-box').contains(e.target)) {
-      closeModal();
-    }
-  }
-
-  // Close on Escape key
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
-  });
-</script>
 
 </body>
 </html>
