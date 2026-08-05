@@ -20,8 +20,8 @@ Teams are made up of **5 members**:
 
 | Role | Responsibility |
 |---|---|
-| **Team Lead (1 person)** | Creates the repository, sets up the base project, and reviews Pull Requests |
-| **Contributors (4 people)** | Fork the repo, add their own profile page, and open a Pull Request |
+| **Team Lead (1 person)** | Creates the repository, sets up the base project, reviews Pull Requests, and runs `update.py` to refresh the main page |
+| **Contributors (4 people)** | Fork the repo, add their own profile folder, and open a Pull Request |
 
 ---
 
@@ -32,10 +32,11 @@ Here is the sequence of events during the bootcamp session:
 1. **Team Lead** creates a new GitHub repository and pushes the starter code.
 2. **Team Lead** shares the repository link with the rest of the team.
 3. Each **Contributor** forks the repository to their own GitHub account.
-4. Each **Contributor** clones their fork, copies the `TEMPLATE` folder, fills in their details, and commits their changes.
+4. Each **Contributor** clones their fork, creates their folder (`rollno-name/`), fills in `info.json` and writes their own `index.html`, then commits their changes.
 5. Each **Contributor** pushes their changes and opens a **Pull Request** back to the Team Lead's repository.
 6. **Team Lead** reviews and merges each Pull Request.
-7. The finished showcase — with everyone's profile card — is visible on the live site!
+7. The main `index.html` is updated automatically (GitHub Actions runs `update.py` on every merge).
+8. The finished showcase — with everyone's profile card — is visible on the live site!
 
 ---
 
@@ -45,7 +46,8 @@ Ready to add your page? All the instructions are in **[CONTRIBUTING.md](CONTRIBU
 
 It will walk you through every step:
 - Forking and cloning the repo
-- Copying and editing the profile template
+- Creating your folder and filling in `info.json`
+- Writing your own `index.html` profile page
 - Committing and pushing your changes
 - Opening a Pull Request
 
@@ -57,11 +59,15 @@ It will walk you through every step:
 
 ```
 bootcamp-demo/
-├── index.html              # Main showcase page (auto-loads all participant cards)
+├── index.html              # Main showcase page (updated by update.py)
+├── update.py               # Script that reads all info.json files and updates index.html
 ├── TEMPLATE/               # Copy this folder to create your own page
-│   └── index.html
+│   ├── index.html          # Starter template — replace with your own content
+│   └── info.json           # Fill in your roll number, name, and photo URL
 ├── participants/
-│   └── registry.json       # Add your folder name here so you appear on the site
+│   └── rollno-name/        # Your folder, named as your roll number + your name
+│       ├── index.html      # Your profile page (you write this)
+│       └── info.json       # Your roll number, name, and photo URL
 ├── CONTRIBUTING.md         # Step-by-step guide for contributors
 └── README.md               # You are here!
 ```
