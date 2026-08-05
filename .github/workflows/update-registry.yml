@@ -1,14 +1,14 @@
-name: Update Participants Registry
+name: Update Participants Page
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'participants/**'
+      - 'participants/**/info.json'
 
 jobs:
-  update-registry:
+  update-page:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -17,24 +17,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Generate registry.json
-        run: |
-          python3 -c "
-          import os, json
-          folders = sorted([
-            d for d in os.listdir('participants')
-            if d.startswith('participant-') and os.path.isdir(os.path.join('participants', d))
-          ])
-          with open('participants/registry.json', 'w') as f:
-            json.dump(folders, f, indent=2)
-            f.write('\n')
-          print('Registry updated:', folders)
-          "
+      - name: Run update.py
+        run: python3 update.py
 
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add participants/registry.json
-          git diff --staged --quiet || git commit -m "chore: auto-update participants registry"
+          git add index.html
+          git diff --staged --quiet || git commit -m "chore: auto-update participants page"
           git push
