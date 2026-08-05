@@ -1,0 +1,50 @@
+name: Auto-merge Participant PRs
+
+on:
+  pull_request_target:
+    paths:
+      - 'participants/participant-*/**'
+    types: [opened, synchronize, reopened]
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+
+    steps:
+      - name: Check PR only touches participant folder
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number
+            });
+
+            const unsafe = files.filter(f =>
+              !f.filename.startsWith('participants/participant-')
+            );
+
+            if (unsafe.length > 0) {
+              console.log('PR touches files outside participants/ — skipping auto-merge:');
+              unsafe.forEach(f => console.log(' -', f.filename));
+              core.setFailed('PR contains files outside allowed path.');
+            } else {
+              console.log('All files are inside participants/participant-* — safe to merge.');
+            }
+
+      - name: Auto-merge the PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              merge_method: 'squash',
+              commit_title: `Add ${context.payload.pull_request.user.login}'s participant page`
+            });
+            console.log('PR merged successfully.');
